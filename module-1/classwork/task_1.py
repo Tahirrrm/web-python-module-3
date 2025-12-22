@@ -1,0 +1,5 @@
+a = input  ("Введите число 1 : ")
+b = input  ("Введите число 2 : ")
+c = input  ("Введите число 3 : ")
+result= str(a)+str(b)+str(c)
+print(result)
