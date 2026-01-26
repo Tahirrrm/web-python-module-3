@@ -32,3 +32,31 @@
 # def func_9 (obj):
 #     print(obj)
 # func_9 ({"a":1,"b":2})
+
+# def func_1():
+#     result = []
+#     for i in range (5):
+#         result.append(i)
+#     return result
+# print (func_1())
+
+# def func_2():
+#   for i in range (5):
+#    yield i
+# gen =  func_2 ()
+# print(gen)
+# print(next(gen))
+# print(next(gen))
+
+# for i in func_2():
+#    print(i)
+
+
+def factorial(n=9):
+    # базовый случай
+    if n <=1:
+        return 1
+    # рукурсивный шаг
+    # 9! = 9*8*7*6*5 ... 
+    return n *  factorial(n-1)
+print(factorial(9))
