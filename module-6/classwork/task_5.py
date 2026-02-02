@@ -1,6 +1,6 @@
 network = {
     "Me" : {"Alice","Bob"},
-    "Alice": {"Me","Chalie","Bob"},
+    "Alice": {"Me","Charlie","Bob"},
     "Bob": {"Me","David","Eve"},
     "Charlie" : {"Alice"},
     "David" : {"Alice","Bob"},
@@ -13,5 +13,5 @@ for friend in my_friends:
   friends_of_friends.update(network[friend])
 
 
-result_operator = user  & network
+result_operator = friends_of_friends - my_friends - {user}
 print(result_operator)
