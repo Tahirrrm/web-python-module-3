@@ -36,7 +36,7 @@ print("Введите начальные координаты коня на до
 
 try:
     start_x = int(input("Строка (0–5): "))
-    start_y = int(input("Столбец (0–5: "))
+    start_y = int(input("Столбец (0–5): "))
     if not (0 <= start_x < n and 0 <= start_y < n):
         print("Ошибка: координаты вне доски.")
     else:
