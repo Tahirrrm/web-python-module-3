@@ -93,3 +93,416 @@ INSERT INTO projects(name,employee_id,budget)
 
 VALUES ('CRM System', 1,500000);
 ```
+## 2.Работа с данными
+### UPDATE
+Обновляет строки
+``` sql
+UPDATE employees
+SET salary = salary * 1.10
+WHERE departament_id = 1;
+```
+
+### `SET`
+Задает новые значения при `UPDATE`
+```sql
+UPDATE projects
+SET is_active = FALSE,
+WHERE budget < 100000;
+```
+### `DELETE`
+Удаляет строки
+``` sql
+DELETE FROM employees
+WHERE salary < 50000;
+```
+### 3. Фильтрация данных
+
+### `WHERE`
+
+Фильтрует строки
+```sql
+SELECT
+FROM employees
+WHERE salary > 100000
+```
+### `AND`
+Обас условия должны быть истинными
+``` sql
+SELECT *
+FROM employees
+WHERE salary > 100000
+AND departament_id = 1;
+```
+### `OR`
+хотя бы одно условия должно быыть истинным
+``` sql
+SELECT *
+FROM employees
+WHERE salary > 100000
+OR departament_id = 1;
+```
+
+### `NOT`
+отрицание условия
+``` sql
+SELECT *
+FROM projects
+WHERE NOT is_active
+
+```
+### `IN`
+проверяет значение входит ли в список
+``` sql
+SELECT *
+FROM employees
+WHERE departament_id IN (1,2);
+
+```
+
+
+### `NOT IN`
+проверяет что значения нет в списке
+``` sql
+SELECT *
+FROM employees
+WHERE departament_id NOT IN (1,2);
+
+```
+
+### `BETWEEN`
+проверяет диапазон
+``` sql
+SELECT *
+FROM employees
+WHERE salary BETWEEN 80000 AND 150000
+
+```
+
+### `LIKE`
+поиск по шаблону
+``` sql
+SELECT *
+FROM employees
+WHERE name LIKE "A%";
+
+```
+
+### `ILIKE`
+поиск по шаблону
+``` sql
+SELECT *
+FROM employees
+WHERE name ILIKE "a%";
+
+```
+
+### `IS NULL`
+проверяет значение на "NULL"
+``` sql
+SELECT *
+FROM employees
+WHERE departament_id IS NULL;
+
+```
+
+### `IS NOT NULL`
+проверяет значение нe "NULL"
+``` sql
+SELECT *
+FROM employees
+WHERE departament_id IS NOT NULL;
+
+```
+
+### `EXISTS`
+проверяет существование
+``` sql
+SELECT *
+FROM departaments AS d
+WHERE EXISTS (
+
+    SELECT 1
+    FROM employees AS e  WHERE e.departaments_id = d.id
+)
+
+```
+
+### 4. Сортировка и ограничение результата
+
+### `ORDER BY`
+сортирует наш результат
+``` sql
+SELECT *
+FROM employees
+ORDER BY salary ;
+
+```
+
+### `ASC`
+сортирует по возрастанию
+``` sql
+SELECT *
+FROM employees
+ORDER BY salary ASC;
+
+```
+
+### `DESC`
+сортировка по убыванию
+``` sql
+SELECT *
+FROM employees
+ORDER BY salary DESC ;
+
+```
+### `LIMIT`
+ограничивает количество строк
+``` sql
+SELECT *
+FROM employees
+ORDER BY salary DESC ;
+LIMIT 5;
+
+```
+
+### `OFFSET`
+Пропускает указанное количество строк
+``` sql
+SELECT *
+FROM employees
+ORDER BY id;
+LIMIT 10 OFFSET 20;
+
+```
+
+## 5. Группировка и агрегаты
+
+### `GROUP BY`
+группирует строки
+``` sql
+SELECT departament_id, COUNT(*) as employee_count
+FROM employees
+GROUP BY departament_id;
+
+```
+
+
+### `HAVING`
+фильтрует группы после  `GROUP BY
+``` sql
+SELECT departament_id,AVG(salary) as avg_salary
+FROM employees
+GROUP BY departament_id;
+HAVING AVG(salary) > 100000
+
+```
+
+
+### `COUNT`
+считает количество строк
+``` sql
+SELECT COUNT(*) 
+FROM employees;
+
+
+```
+
+
+### `SUM`
+суммирует значения
+``` sql
+SELECT SUM(budget)
+FROM projects
+
+```
+
+### `AVG`
+считает среднее
+``` sql
+SELECT AVG(salary)
+FROM employees;
+
+```
+
+
+### `MIN`
+минимальное значение
+``` sql
+SELECT MIN(salary)
+FROM employees;
+
+```
+### `MAX`
+максимальное значение
+``` sql
+SELECT MAX(salary)
+FROM employees;
+
+```
+
+### `DISTINCT`
+убирает дубликаты
+``` sql
+SELECT DISTINCT departament_id
+FROM employees;
+
+```
+
+## 6. Соединение таблиц
+
+### `JOIN`
+Соединяет таблицы
+``` sql
+SELECT e.name,d.name AS departament
+FROM employees AS e
+JOIN departaments d ON e.departament_id = d.id;
+
+```
+
+### ` INNER JOIN`
+показывает совпавшике строки тот дже джоин почти
+``` sql
+SELECT e.name,p.name AS project
+
+FROM employees AS e
+INNER JOIN projects p ON p.employee_id = e.id;
+
+```
+
+
+### `LEFT JOIN`
+Показывает все строки из левой таблицы. даже если справа нет совпадений.
+``` sql
+SELECT e.name,p.name AS project
+FROM employees AS e
+LEFT JOIN projects p ON p.employee_id = e.id;
+```
+
+
+### `RIGHT JOIN`
+Показывает все строки из правой таблицы. даже если слева нет совпадений.
+``` sql
+SELECT e.name,p.name AS project
+FROM employees AS e
+RIGHT JOIN projects p ON p.employee_id = e.id;
+
+```
+
+### `FULL JOIN`
+показывает все строки из обеих таблиц
+``` sql
+SELECT e.name,p.name AS project
+FROM employees AS e
+FULL JOIN projects p ON p.employee_id = e.id;
+
+```
+
+### `ON`
+условие соединения
+``` sql
+SELECT *
+FROM employees AS e
+JOIN departaments d ON e.departament_id = d.id
+
+```
+
+## 7. Алиасы
+
+### `AS`
+Дает псевдоним колонке или таблице
+``` sql
+
+SELECT name AS employee_name,
+salary AS monthly_salary
+FROM employees AS e
+```
+```sql
+SELECT e.name
+FROM employees e
+```
+
+## 8. ограничение таблиц
+### `PRIMARY KEY`
+Главный ключ
+```sql
+CREATE TABLE departaments(
+    id SERIAL PRIMARY KEY,
+    name TEXT
+)
+```
+
+### `FOREIGN KEY`
+Внешний ключ
+```sql
+CREATE TABLE employees(
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    departament_id INT,
+    FOREIGN KEY (departament_id) REFERENCES departaments (id)
+)
+```
+Короткая запись 
+
+```sql
+departament_id INT REFERENCES departaments(id),
+```
+### `REFERENCES`
+Указывает на какую таблицу и колонку ссылается ключ
+```sql
+
+   departament_id INT REFERENCES departaments (id)
+
+```
+
+### `NOT NULL`
+запрещает иметь назначение колонки   NULL
+```sql
+
+    name TEXT NOT NULL
+
+```
+### ` NULL`
+отстутсвует какое то значение
+```sql
+INSERT INTO employees( name,salary, departament_id)
+    VALUES (`иван`, NULL,1)
+```
+### ` UNIQUE`
+значение должно быть уникальным
+```sql
+ALTER TABLE employees
+ADD CONSTRAINT unique_employee_email UNIQUE (email)
+```
+### ` CONSTRAINT`
+дает имя ограничению
+```sql
+ALTER TABLE employees
+ADD CONSTRAINT salary_positive CHECK (salary >0);
+
+```
+
+### ` CHECK`
+Проверяет условие
+```sql
+ALTER TABLE employees
+ADD CONSTRAINT salary_positive CHECK (salary >0);
+
+```
+
+
+### ` DEFAULT`
+Значение по умолчанию
+```sql
+ALTER TABLE projects
+ALTER COLUMN is_active SET DEFAULT TRUE;
+
+```
+
+
+
+
+
+
+
+
+
