@@ -33,9 +33,11 @@
 # f.write("4,5,6\n")
 # f.write("7,8,9")
 # f.close
+
 # for lint in f:
 #     print (line.strip())
 # f.close()
+
 with open("file.txt", "r", encoding="utf-8") as f: #чтение всего файла
     for line in f:
         print(line.strip())

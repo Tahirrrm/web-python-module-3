@@ -69,3 +69,14 @@ payload:Employee = {
     "name":"Alice",
     "salary": 1000
 }
+
+from dataclasses import dataclass
+@dataclass
+class EmployeeCard:
+    emp_id: int
+    name: str
+card = EmployeeCard(1, "Alice")     # или (emp_id = 1, name = "Alice")
+card.name
+
+def find_emp(emps: dict[int, EmployeeCard]) -> None:
+    pass
